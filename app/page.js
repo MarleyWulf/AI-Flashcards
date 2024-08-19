@@ -1,5 +1,5 @@
 import Image from "next/image";
 
 export default function Home() {
-  return <main>Flashcards App</main>;
+  return <main>the boys App</main>;
 }
