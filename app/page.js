@@ -56,6 +56,7 @@ export default function Home() {
     },
   ];
   const [text, setText] = useState("");
+  const [isFront, setIsFront]=useState(true)
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
@@ -99,12 +100,17 @@ export default function Home() {
           Submit
         </Button>
       </Box>
-      <Box sx={{ mt: 4 }}>
+      <Box sx={{ mt: 4 , alignSelf: "center"}}>
         {/** use grid, set each box with a value of 3, use space evenly? */}
-        <Typography> Flashcards Preview</Typography>
+        <Typography sx = {{marginBottom:"20px"}}> Flashcards Preview</Typography>
         <Grid container spacing={2}>
           { flashcard.map((flashcard, index) => (
-            <Card>
+            <Card sx= {{
+              width: 200,
+               height: 200,
+               mb: 2,
+               mr:2
+               }} onClick={() => setIsFront(!isFront)}>
               <CardContent>
                 <Typography variant="h6">Front:</Typography>
                 <Typography>{flashcard.front}</Typography>
