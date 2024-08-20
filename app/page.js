@@ -100,29 +100,27 @@ export default function Home() {
           Submit
         </Button>
       </Box>
-      <Box sx={{ mt: 4 , alignSelf: "center"}}>
+      <Box sx={{ mt: 4, display: 'flex',flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
         {/** use grid, set each box with a value of 3, use space evenly? */}
         <Typography sx = {{marginBottom:"20px"}}> Flashcards Preview</Typography>
-        <Grid container spacing={2}>
-          { flashcard.map((flashcard, index) => (
-            <Card sx= {{
-              width: 200,
-               height: 200,
-               mb: 2,
-               mr:2
-               }} onClick={() => setIsFront(!isFront)}>
-              <CardContent>
-                <Typography variant="h6">Front:</Typography>
-                <Typography>{flashcard.front}</Typography>
-                <Typography variant="h6" sx={{ mt: 2 }}>
-                  Back:
-                </Typography>
-                <Typography>{flashcard.back}</Typography>
-              </CardContent>
-            </Card>
-          ))
-          }
+        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+    <Grid container spacing={2} justifyContent="center">
+      {flashcard.map((flashcard, index) => (
+        <Grid item xs={3} key={index}>
+          <Card sx={{ width: 200, height: 200, mb: 2 }} onClick={() => setIsFront(!isFront)}>
+            <CardContent>
+              <Typography variant="h6">Front:</Typography>
+              <Typography>{flashcard.front}</Typography>
+              <Typography variant="h6" sx={{ mt: 2 }}>
+                Back:
+              </Typography>
+              <Typography>{flashcard.back}</Typography>
+            </CardContent>
+          </Card>
         </Grid>
+      ))}
+    </Grid>
+  </Box>
       </Box>
     </Container>
   );
