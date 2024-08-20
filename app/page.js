@@ -12,55 +12,43 @@ import {
 } from "@mui/material";
 import Button from "@mui/joy/Button";
 import { useState } from "react";
+import  flashcard from "./data.js";
 export default function Home() {
-  const flashcard = [
-    {
-      front: "What is the capital of France?",
-      back: "Paris",
-    },
-    {
-      front: "What is 2 + 2?",
-      back: "4",
-    },
-    {
-      front: "Who wrote 'To Kill a Mockingbird'?",
-      back: "Harper Lee",
-    },
-    {
-      front: "What is the chemical symbol for gold?",
-      back: "Au",
-    },
-    {
-      front: "Which planet is known as the Red Planet?",
-      back: "Mars",
-    },
-    {
-      front: "What is the largest ocean on Earth?",
-      back: "Pacific Ocean",
-    },
-    {
-      front: "In what year did the Titanic sink?",
-      back: "1912",
-    },
-    {
-      front: "Who painted the Mona Lisa?",
-      back: "Leonardo da Vinci",
-    },
-    {
-      front: "What is the hardest natural substance on Earth?",
-      back: "Diamond",
-    },
-    {
-      front: "What is the smallest prime number?",
-      back: "2",
-    },
-  ];
+  
   const [text, setText] = useState("");
-  const [isFront, setIsFront]=useState(true)
+  const [flashcards, setFlashcards] = useState([])
+  const [isFront, setIsFront] = useState(true);
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
-  const handleSubmit = () => {};
+  const handleSubmit =  async () => {
+    if (!text.trim()) return;
+    
+    try{
+      const response = await fetch("api/flashcard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text })
+      })
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      setText("");
+      if (Array.isArray(data.reply)) {
+        setFlashcards(data.reply);
+        console.log(data.reply)
+      } else {
+        console.error("Different response format", data)
+      }
+    } catch (error){
+        console.error("error fetching flashcards", error)
+    }
+  };
   return (
     <Container>
       <Box
@@ -89,6 +77,12 @@ export default function Home() {
           variant="outlined"
           sx={{ mb: 2 }}
           onChange={handleInputChange}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              handleSubmit();
+              setText("");
+            }
+          }}
         />
         <Button
           cariant="contained"
@@ -97,30 +91,43 @@ export default function Home() {
           fullWidth
         >
           {" "}
-          Submit
+          Render Flashcards
         </Button>
       </Box>
-      <Box sx={{ mt: 4, display: 'flex',flexDirection:"column", justifyContent: 'center', alignItems: 'center'}}>
+      <Box
+        sx={{
+          mt: 4,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         {/** use grid, set each box with a value of 3, use space evenly? */}
-        <Typography sx = {{marginBottom:"20px"}}> Flashcards Preview</Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-    <Grid container spacing={2} justifyContent="center">
-      {flashcard.map((flashcard, index) => (
-        <Grid item xs={3} key={index}>
-          <Card sx={{ width: 200, height: 200, mb: 2 }} onClick={() => setIsFront(!isFront)}>
-            <CardContent>
-              <Typography variant="h6">Front:</Typography>
-              <Typography>{flashcard.front}</Typography>
-              <Typography variant="h6" sx={{ mt: 2 }}>
-                Back:
-              </Typography>
-              <Typography>{flashcard.back}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
-  </Box>
+        <Typography sx={{ marginBottom: "20px" }}>
+          {" "}
+          Flashcards Preview
+        </Typography>
+        <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
+          <Grid container spacing={2} justifyContent="center">
+            {flashcard.map((flashcard, index) => (
+              <Grid item xs={3} key={index}>
+                <Card
+                  sx={{ width: 200, height: 200, mb: 2 }}
+                >
+                  <CardContent>
+                    <Typography variant="h6">Front:</Typography>
+                    <Typography>{flashcard.front}</Typography>
+                    <Typography variant="h6" sx={{ mt: 2 }}>
+                      Back:
+                    </Typography>
+                    <Typography>{flashcard.back}</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       </Box>
     </Container>
   );
