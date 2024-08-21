@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import {
   Box,
   AppBar,
@@ -8,16 +8,26 @@ import {
   IconButton,
   MenuIcon,
   Search,
+  Button,
 } from "@mui/material";
+import Cards from "../components/cards";
+
+let cardsinfo = [{ title: "hi" }, { title: "hello" }, { title: "welcome" }];
+
+let pricinginfo = [{ title: "Free" }, { title: "Pro" }];
 
 export default function Home() {
   return (
     <Box>
       <Stack>
         <Box>
-          <AppBar position="static">
-            <Toolbar>
+          <AppBar position="static" sx={{ backgroundColor: "black" }}>
+            <Toolbar sx={{ justifyContent: "space-between" }}>
               <Typography>Flashcards AI</Typography>
+              <Box sx={{ ml: "auto" }}>
+                <Button>Login</Button>
+                <Button>Sign Up</Button>
+              </Box>
             </Toolbar>
           </AppBar>
         </Box>
@@ -26,12 +36,15 @@ export default function Home() {
         <Typography variant="h2">Welcome To FlashCards AI</Typography>{" "}
         {/*placeholder name*/}
         <Stack direction="row" spacing={2}>
-          <Typography>Tier 1</Typography>
-          <Typography>Tier 2</Typography>
-          <Typography>Tier 3</Typography>
+          {cardsinfo.map((card, index) => (
+            <Cards key={index} title={card.title} />
+          ))}
         </Stack>
-        <Stack>
-          <Typography>Other Information</Typography>
+        <Stack spacing={3} sx={{ alignItems: "center" }}>
+          <Typography>Pricing</Typography>
+          {pricinginfo.map((price, index) => (
+            <Cards key={index} title={price.title} />
+          ))}
         </Stack>
       </Stack>
     </Box>
