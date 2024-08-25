@@ -20,6 +20,7 @@ import { useState } from "react";
 import flashcard from "../data.js";
 import Link from "next/link.js";
 import { LinkedCamera } from "@mui/icons-material";
+import ToolBar from "@/components/ToolBar.js";
 
 let cardsinfo = [{ title: "hi" }, { title: "hello" }, { title: "welcome" }];
 
@@ -62,23 +63,7 @@ export default function Home() {
   };
   return (
     <Box>
-      <Stack>
-        <Box>
-          <AppBar position="static" sx={{ backgroundColor: "black" }}>
-            <Toolbar sx={{ justifyContent: "space-between" }}>
-              <Typography>
-                <Link href="/" style={{ textDecoration: "none" }}>
-                  Flashcards AI
-                </Link>
-              </Typography>
-              <Box sx={{ ml: "auto" }}>
-                <Button>Login</Button>
-                <Button>Sign Up</Button>
-              </Box>
-            </Toolbar>
-          </AppBar>
-        </Box>
-      </Stack>
+      <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-Up"} />
       <Container>
         <Box
           sx={{

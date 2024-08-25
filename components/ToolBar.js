@@ -10,13 +10,27 @@ export default function ToolBar({ loginLink, signUpLink }) {
       <Box>
         <AppBar position="static" sx={{ backgroundColor: "black" }}>
           <Toolbar sx={{ justifyContent: "space-between" }}>
-            <Typography>Flashcards AI</Typography>
+            <Typography>
+              <Link href="/" style={{ textDecoration: "none" }}>
+                Flashcards AI
+              </Link>
+            </Typography>
             <Box sx={{ ml: "auto" }}>
               <Button>
-                <Link href={loginLink}>Login</Link>
+                <Link
+                  href={loginLink}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Login
+                </Link>
               </Button>
               <Button>
-                <Link href={signUpLink}>Sign Up</Link>
+                <Link
+                  href={signUpLink}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Sign Up
+                </Link>
               </Button>
             </Box>
           </Toolbar>
