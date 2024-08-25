@@ -13,7 +13,7 @@ import {
   Button,
 } from "@mui/material";
 import Cards from "../components/cards";
-// import ToolBar from "@/components/Toolbar";
+import ToolBar from "@/components/ToolBar";
 
 let cardsinfo = [
   {
@@ -32,34 +32,7 @@ let pricinginfo = [{ title: "Free" }, { title: "Pro" }];
 export default function Home() {
   return (
     <Box width="100vw" height="100vh" sx={{ backgroundColor: "#4c516d" }}>
-      {/* <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-Up"} /> */}
-      <Stack>
-        <Box>
-          <AppBar position="static" sx={{ backgroundColor: "black" }}>
-            <Toolbar sx={{ justifyContent: "space-between" }}>
-              <Typography>Flashcards AI</Typography>
-              <Box sx={{ ml: "auto" }}>
-                <Button>
-                  <Link
-                    href="/Log-in"
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    Login
-                  </Link>
-                </Button>
-                <Button>
-                  <Link
-                    href="Sign-up"
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    Sign Up
-                  </Link>
-                </Button>
-              </Box>
-            </Toolbar>
-          </AppBar>
-        </Box>
-      </Stack>
+      <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-Up"} />
       <Stack sx={{ alignItems: "center", mt: "20px" }}>
         <Typography variant="h2">Welcome To FlashCards AI</Typography>
         <Typography variant="h5">A better way to use flashcards</Typography>
