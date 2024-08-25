@@ -67,7 +67,9 @@ export default function Home() {
           <AppBar position="static" sx={{ backgroundColor: "black" }}>
             <Toolbar sx={{ justifyContent: "space-between" }}>
               <Typography>
-                <Link href="/">Flashcards AI</Link>
+                <Link href="/" style={{ textDecoration: "none" }}>
+                  Flashcards AI
+                </Link>
               </Typography>
               <Box sx={{ ml: "auto" }}>
                 <Button>Login</Button>

@@ -23,7 +23,7 @@ function Cards({ title, mainText, description, quote, buttonText }) {
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
             {title}
           </Typography>
-          <Typography variant="h5" component="div">
+          <Typography variant="h6" component="div">
             {mainText}
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">

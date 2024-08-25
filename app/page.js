@@ -13,45 +13,82 @@ import {
   Button,
 } from "@mui/material";
 import Cards from "../components/cards";
+// import ToolBar from "@/components/Toolbar";
 
-let cardsinfo = [{ title: "hi" }, { title: "hello" }, { title: "welcome" }];
+let cardsinfo = [
+  {
+    title: "Study With AI",
+    mainText: "Use ai to get the most out of your studies",
+  },
+  {
+    title: "Enhance Your Studying",
+    mainText: "More interactive way to use flashcards",
+  },
+  { title: "Get Results", mainText: "Be able to retain what you learned" },
+];
 
 let pricinginfo = [{ title: "Free" }, { title: "Pro" }];
 
 export default function Home() {
   return (
-    <Box>
+    <Box width="100vw" height="100vh" sx={{ backgroundColor: "#4c516d" }}>
+      {/* <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-Up"} /> */}
       <Stack>
         <Box>
           <AppBar position="static" sx={{ backgroundColor: "black" }}>
             <Toolbar sx={{ justifyContent: "space-between" }}>
               <Typography>Flashcards AI</Typography>
               <Box sx={{ ml: "auto" }}>
-                <Button>Login</Button>
-                <Button>Sign Up</Button>
+                <Button>
+                  <Link
+                    href="/Log-in"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    Login
+                  </Link>
+                </Button>
+                <Button>
+                  <Link
+                    href="Sign-up"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    Sign Up
+                  </Link>
+                </Button>
               </Box>
             </Toolbar>
           </AppBar>
         </Box>
       </Stack>
-      <Stack sx={{ alignItems: "center" }}>
+      <Stack sx={{ alignItems: "center", mt: "20px" }}>
         <Typography variant="h2">Welcome To FlashCards AI</Typography>
+        <Typography variant="h5">A better way to use flashcards</Typography>
 
-        <Stack direction="row" spacing={2}>
+        <Button variant="outlined" sx={{ mt: "10px", textDecoration: "none" }}>
+          <Link
+            href="/Generate"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            Generate
+          </Link>
+        </Button>
+
+        <Stack direction="row" spacing={2} sx={{ mt: "40px" }}>
           {cardsinfo.map((card, index) => (
-            <Cards key={index} title={card.title} />
+            <Cards key={index} title={card.title} mainText={card.mainText} />
           ))}
         </Stack>
-        <Stack>
-          <Stack spacing={3} sx={{ alignItems: "center" }}>
-            <Typography>Pricing</Typography>
+        <Stack sx={{ alignItems: "center", mt: "50px" }}>
+          <Typography variant="h4">Pricing</Typography>
+          <Stack
+            direction="row"
+            spacing={3}
+            sx={{ alignItems: "center", mt: "20px" }}
+          >
             {pricinginfo.map((price, index) => (
               <Cards key={index} title={price.title} />
             ))}
           </Stack>
-          <Typography>
-            <Link href="/Generate">Generate</Link>
-          </Typography>
         </Stack>
       </Stack>
     </Box>
