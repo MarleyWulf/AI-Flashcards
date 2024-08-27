@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import Cards from "../components/cards";
 import ToolBar from "@/components/ToolBar";
+import { useClerk } from "@clerk/nextjs";
+import getStripe from "@/utils/get-stripe";
 
 let cardsinfo = [
   {
@@ -30,6 +32,7 @@ let cardsinfo = [
 let pricinginfo = [{ title: "Free" }, { title: "Pro" }];
 
 export default function Home() {
+  const { signOut } = useClerk();
   return (
     <Box width="100vw" height="100vh" sx={{ backgroundColor: "#4c516d" }}>
       <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-Up"} />
@@ -62,6 +65,12 @@ export default function Home() {
               <Cards key={index} title={price.title} />
             ))}
           </Stack>
+          <Button
+            variant="outline"
+            onClick={() => signOut({ redirectUrl: "/" })}
+          >
+            Sign Out
+          </Button>
         </Stack>
       </Stack>
     </Box>
