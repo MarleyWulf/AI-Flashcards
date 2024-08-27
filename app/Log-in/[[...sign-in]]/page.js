@@ -5,7 +5,7 @@ import ToolBar from "@/components/ToolBar";
 export default function Login() {
   return (
     <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-      <ToolBar loginLink="/Log-in" signUpLink="/Sign-Up" />
+      <ToolBar loginLink="/Log-in" signUpLink="/Sign-up" />
       <Container
         sx={{
           height: "100vh", // Full viewport height
