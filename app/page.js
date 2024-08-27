@@ -35,7 +35,7 @@ export default function Home() {
   const { signOut } = useClerk();
   return (
     <Box width="100vw" height="100vh" sx={{ backgroundColor: "#4c516d" }}>
-      <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-Up"} />
+      <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-up"} />
       <Stack sx={{ alignItems: "center", mt: "20px" }}>
         <Typography variant="h2">Welcome To FlashCards AI</Typography>
         <Typography variant="h5">A better way to use flashcards</Typography>

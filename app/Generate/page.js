@@ -63,7 +63,7 @@ export default function Home() {
   };
   return (
     <Box>
-      <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-Up"} />
+      <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-up"} />
       <Container>
         <Box
           sx={{
