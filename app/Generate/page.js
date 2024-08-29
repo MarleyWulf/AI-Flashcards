@@ -1,66 +1,121 @@
 "use client";
 import {
   Box,
-  AppBar,
   Typography,
-  Stack,
-  Toolbar,
-  IconButton,
-  MenuIcon,
-  Search,
   Button,
   Container,
   TextField,
   Grid,
   Card,
   CardContent,
+  CardActionArea,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogTextField,
+  DialogActions,
 } from "@mui/material";
 
-import { useState } from "react";
-import flashcard from "../data.js";
-import Link from "next/link.js";
-import { LinkedCamera } from "@mui/icons-material";
+import { useState, useEffect } from "react";
 import ToolBar from "@/components/ToolBar.js";
+import ReactCardFlip from "react-card-flip";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/router";
 
-let cardsinfo = [{ title: "hi" }, { title: "hello" }, { title: "welcome" }];
-
-let pricinginfo = [{ title: "Free" }, { title: "Pro" }];
-
-export default function Home() {
+export default function GenerateFlashcards() {
   const [text, setText] = useState("");
   const [flashcards, setFlashcards] = useState([]);
-  const [isFront, setIsFront] = useState(true);
+  const [flipped, setFlipped] = useState([]);
+  const [name, setName] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const { isLoaded, isSignedIn, user } = useUser();
+
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
+
   const handleSubmit = async () => {
     if (!text.trim()) return;
 
-    try {
-      const response = await fetch("api/flashcard", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ text }),
-      });
+    const response = await fetch("/api/flashcard", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ text }),
+    });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = await response.json();
-      setText("");
-      if (Array.isArray(data.reply)) {
-        setFlashcards(data.reply);
-        console.log(data.reply);
-      } else {
-        console.error("Different response format", data);
-      }
-    } catch (error) {
-      console.error("error fetching flashcards", error);
-    }
+    const data = await response.json();
+    setFlashcards(data);
   };
+
+  const handleClick = (id) =>
+    setFlipped((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+
+  const handleOpen = () => {
+    setDialogOpen(true);
+  };
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
+  const saveFlashcards = async () => {
+    if (!name) {
+      alert("Please enter a name");
+      return;
+    }
+    const batch = writeBatch(db);
+    const userDocRef = doc(collection(db, "users"), user.id);
+    const docSnap = await getDoc(userDocRef);
+
+    if (docSnap.exists()) {
+      const collections = docSnap.data().flashcards || [];
+      if (collections.find((f) => f.name === name)) {
+        alert("Flashcard collection with the same name already exists");
+        return;
+      } else {
+        collections.push({ name });
+        batch.set(userDocRef, { flashcards: collections }, { merge: true });
+      }
+    } else {
+      batch.set(userDocRef, { flashcards: [{ name }] });
+    }
+
+    const colRef = collection(userDocRef, name);
+    flashcards.forEach((flashcard) => {
+      const cardDocRef = doc(colRef);
+      batch.set(cardDocRef, flashcard);
+    });
+
+    await batch.commit();
+    handleCloseDialog();
+    router.push("/flashcards");
+  };
+  useEffect(() => {
+    if (
+      flashcards &&
+      flashcards.flashcards &&
+      flashcards.flashcards.length > 0
+    ) {
+      // Check if isFront has already been initialized
+      const isFrontInitialized = flashcards.flashcards.some((flashcard) =>
+        flashcard.hasOwnProperty("isFront")
+      );
+
+      if (!isFrontInitialized) {
+        setFlashcards((prevFlashcards) => ({
+          flashcards: prevFlashcards.flashcards.map((flashcard) => ({
+            ...flashcard,
+            isFront: true,
+          })),
+        }));
+      }
+    }
+  }, [flashcards]);
   return (
     <Box>
       <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-up"} />
@@ -126,24 +181,101 @@ export default function Home() {
             sx={{ display: "flex", justifyContent: "center", width: "100%" }}
           >
             <Grid container spacing={2} justifyContent="center">
-              {flashcard.map((flashcard, index) => (
-                <Grid item xs={3} key={index}>
-                  <Card sx={{ width: 200, height: 200, mb: 2 }}>
-                    <CardContent>
-                      <Typography variant="h6">Front:</Typography>
-                      <Typography>{flashcard.front}</Typography>
-                      <Typography variant="h6" sx={{ mt: 2 }}>
-                        Back:
-                      </Typography>
-                      <Typography>{flashcard.back}</Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
+              {flashcards &&
+              flashcards.flashcards &&
+              flashcards.flashcards.length > 0 ? (
+                <>
+                  {/* Flashcards */}
+                  {flashcards.flashcards.map((flashcard, index) => (
+                    <Grid item xs={3} key={index}>
+                      <Card sx={{ width: 200, height: 200, mb: 2 }}>
+                        <CardActionArea onClick={() => handleClick(index)}>
+                          <CardContent>
+                            <Box sx = {{
+                              perspective: '1000px',
+                              '& > div': {
+                                transition: 'transform 0.6s',
+                                transformStyle: 'preserve-3d',
+                                position: 'relative',
+                                width: '100%',
+                                height: '200px',
+                                boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+                                transform : flipped[index]
+                                ? 'rotateY(180deg)' 
+                                : 'rotateY(00deg)',
+                              },
+                              '& > div > div': {
+                                position: 'absolute',
+                                width: '100%',
+                                height: '100%',
+                                backfaceVisibility: 'hidden',
+                                display: 'flex',
+                                alignItems: 'center',
+                                padding: 2,
+                                boxSizing: 'border-box'
+                              },
+                              '& > div > div:nth-of-type(2)':{
+                                transform: 'rotateY(180deg)',
+                              }
+                            }}>
+                              <div>
+                                <div>
+                                  <Typography variant="h6" component="div">
+                                    {flashcard.front}
+                                  </Typography>
+                                </div>
+                                <div>
+                                  <Typography variant="h6" component="div">
+                                    {flashcard.back}
+                                  </Typography>
+                                </div>
+                              </div>
+                            </Box>
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    </Grid>
+                  ))}
+                <Grid container justifyContent="center" sx={{ mt: 1}}>
+  <Grid item xs={12} sm={6} md={4} display="flex" justifyContent="center">
+    <Button variant="contained" color="secondary" onClick={handleOpen} fullWidth>
+      Save
+    </Button>
+  </Grid>
+</Grid>
+                </>
+              ) : (
+                <Typography>No flashcards generated yet.</Typography>
+              )}
             </Grid>
           </Box>
+          
         </Box>
       </Container>
+      <Dialog open={dialogOpen} onClose={handleClose}>
+                <DialogTitle> Save Flashcards</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Please enter a name for your flashcard collection
+                  </DialogContentText>
+                  <TextField
+                  autoFocus
+                  margin="dense"
+                  label='Collection Name'
+                  type = 'text'
+                  fullWidth
+                  value = {name}
+                  variant="outlined"
+                  onChange={(e)=> setName(e.target.value)}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose}>
+                    Cancel
+                  </Button>
+                  <Button onClick={saveFlashcards}>Save</Button>
+                </DialogActions>
+      </Dialog>
     </Box>
   );
 }
