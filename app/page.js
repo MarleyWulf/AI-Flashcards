@@ -29,10 +29,39 @@ let cardsinfo = [
   { title: "Get Results", mainText: "Be able to retain what you learned" },
 ];
 
-let pricinginfo = [{ title: "Free" }, { title: "Pro" }];
-
 export default function Home() {
   const { signOut } = useClerk();
+
+  //handlesubmit for stripe checkout
+  const handleSubmit = async () => {
+    const checkoutSession = await fetch("/api/checkout_session", {
+      method: "POST",
+      headers: "http://localhost:3000",
+    });
+
+    const checkoutSessionJson = await checkoutSession.json();
+
+    if (checkoutSession.statusCode === 500) {
+      console.error(checkoutSession.message);
+      return;
+    }
+
+    const stripe = await getStripe();
+    const { error } = await stripe.redirectToCheckout({
+      sessionID: checkoutSessionJson.id,
+    });
+
+    if (error) {
+      console.warn(error.message);
+    }
+  };
+
+  //Testing out the onclick function in the object
+  let pricinginfo = [
+    { title: "Free", buttonText: "Try Here" },
+    { title: "Pro", buttonText: "Buy Now", onClick: handleSubmit },
+  ];
+
   return (
     <Box width="100vw" height="100vh" sx={{ backgroundColor: "#4c516d" }}>
       <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-up"} />
@@ -62,7 +91,12 @@ export default function Home() {
             sx={{ alignItems: "center", mt: "20px" }}
           >
             {pricinginfo.map((price, index) => (
-              <Cards key={index} title={price.title} />
+              <Cards
+                key={index}
+                title={price.title}
+                buttonText={price.buttonText}
+                onClick={price.onClick}
+              />
             ))}
           </Stack>
           <Button
