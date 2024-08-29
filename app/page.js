@@ -1,17 +1,7 @@
 "use client";
 // import Image from "next/image";
 import Link from "next/link";
-import {
-  Box,
-  AppBar,
-  Typography,
-  Stack,
-  Toolbar,
-  IconButton,
-  MenuIcon,
-  Search,
-  Button,
-} from "@mui/material";
+import { Box, Typography, Stack, Button } from "@mui/material";
 import Cards from "../components/cards";
 import ToolBar from "@/components/ToolBar";
 import { useClerk } from "@clerk/nextjs";
@@ -29,9 +19,25 @@ let cardsinfo = [
   { title: "Get Results", mainText: "Be able to retain what you learned" },
 ];
 
-let pricinginfo = [{ title: "Free" }, { title: "Pro" }];
-
 export default function Home() {
+  const handleSubmit = async () => {
+    const checkoutSession = await fetch("/api/checkout_session", {
+      method: "POST",
+      headers: { origin: "http://localhost:3000" },
+    });
+    console.log(checkoutSession)
+    const checkoutSessionJson = await checkoutSession.json();
+
+    const stripe = await getStripe();
+    const { error } = await stripe.redirectToCheckout({
+      sessionId: checkoutSessionJson.id,
+    });
+
+    if (error) {
+      console.warn(error.message);
+    }
+  };
+
   const { signOut } = useClerk();
   return (
     <Box width="100vw" height="100vh" sx={{ backgroundColor: "#4c516d" }}>
@@ -61,9 +67,55 @@ export default function Home() {
             spacing={3}
             sx={{ alignItems: "center", mt: "20px" }}
           >
-            {pricinginfo.map((price, index) => (
-              <Cards key={index} title={price.title} />
-            ))}
+            <Button
+              variant="contained"
+              sx={{
+                width: "250px",
+                height: "150px",
+                borderRadius: "12px",
+                boxShadow: 4,
+                textTransform: "none",
+                backgroundColor: "#1E90FF",
+                color: "#fff",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                "&:hover": {
+                  boxShadow: 8,
+                  backgroundColor: "#1C86EE",
+                },
+              }}
+            >
+              <Link
+                href="/Generate"
+                style={{ textDecoration: "none", color: "inherit" }}
+              ></Link>
+              <Typography variant="h6">Free</Typography>
+            </Button>
+            <Button
+              onClick={handleSubmit}
+              variant="contained"
+              sx={{
+                width: "250px",
+                height: "150px",
+                borderRadius: "12px",
+                boxShadow: 4,
+                textTransform: "none",
+                backgroundColor: "#000",
+                color: "#fff",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                "&:hover": {
+                  boxShadow: 8,
+                  backgroundColor: "#333",
+                },
+              }}
+            >
+              <Typography variant="h6">Pro</Typography>
+            </Button>
           </Stack>
           <Button
             variant="outline"

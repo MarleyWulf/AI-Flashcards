@@ -19,9 +19,10 @@ import {
 
 import { useState, useEffect } from "react";
 import ToolBar from "@/components/ToolBar.js";
-import ReactCardFlip from "react-card-flip";
 import { useUser } from "@clerk/nextjs";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import {db} from '@/firebase'
+import {doc,collection, setDoc, getDoc, writeBatch } from 'firebase/firestore'
 
 export default function GenerateFlashcards() {
   const [text, setText] = useState("");
@@ -30,7 +31,7 @@ export default function GenerateFlashcards() {
   const [name, setName] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const { isLoaded, isSignedIn, user } = useUser();
-
+  const router = useRouter()
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
@@ -47,7 +48,7 @@ export default function GenerateFlashcards() {
     });
 
     const data = await response.json();
-    setFlashcards(data);
+    setFlashcards(data.flashcards);
   };
 
   const handleClick = (id) =>
@@ -86,33 +87,30 @@ export default function GenerateFlashcards() {
     }
 
     const colRef = collection(userDocRef, name);
+    
     flashcards.forEach((flashcard) => {
       const cardDocRef = doc(colRef);
       batch.set(cardDocRef, flashcard);
     });
 
     await batch.commit();
-    handleCloseDialog();
+    handleClose();
     router.push("/flashcards");
   };
   useEffect(() => {
-    if (
-      flashcards &&
-      flashcards.flashcards &&
-      flashcards.flashcards.length > 0
-    ) {
+    if (Array.isArray(flashcards) && flashcards.length > 0) {
       // Check if isFront has already been initialized
-      const isFrontInitialized = flashcards.flashcards.some((flashcard) =>
+      const isFrontInitialized = flashcards.some((flashcard) =>
         flashcard.hasOwnProperty("isFront")
       );
-
+  
       if (!isFrontInitialized) {
-        setFlashcards((prevFlashcards) => ({
-          flashcards: prevFlashcards.flashcards.map((flashcard) => ({
+        setFlashcards((prevFlashcards) =>
+          prevFlashcards.map((flashcard) => ({
             ...flashcard,
             isFront: true,
-          })),
-        }));
+          }))
+        );
       }
     }
   }, [flashcards]);
@@ -181,12 +179,9 @@ export default function GenerateFlashcards() {
             sx={{ display: "flex", justifyContent: "center", width: "100%" }}
           >
             <Grid container spacing={2} justifyContent="center">
-              {flashcards &&
-              flashcards.flashcards &&
-              flashcards.flashcards.length > 0 ? (
+              {Array.isArray(flashcards) && flashcards.length > 0 ? (
                 <>
-                  {/* Flashcards */}
-                  {flashcards.flashcards.map((flashcard, index) => (
+                  {flashcards.map((flashcard, index) => (
                     <Grid item xs={3} key={index}>
                       <Card sx={{ width: 250, height: 250, mb: 2 }}>
                         <CardActionArea onClick={() => handleClick(index)}>
