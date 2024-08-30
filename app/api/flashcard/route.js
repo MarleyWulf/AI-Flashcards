@@ -5,36 +5,39 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const apiKey = process.env.API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
-const systeminstruction =
-  "You will take the topic that the user inputs and create 5 flashcards with a question and an answer that pertains to the topic";
+const systeminstruction =  `
+You are a flashcard creator, you take in text and create multiple flashcards from it. Make sure to create exactly 5 flashcards.
+Both front and back should be one sentence long.
+You should return in the following JSON format:
+{
+  "flashcards":[
+    {
+      "front": "Front of the card",
+      "back": "Back of the card"
+    }
+      // More flashcards...
+  ]
+}
+`
 
 export async function POST(request) {
-  const { message } = await request.json();
-  console.log(" Received text: ", message);
+  const { text } = await request.json();
+  console.log(" Received text: ", text);
 
   const model = genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
     systemInstruction: systeminstruction,
+    generationConfig: { responseMimeType: "application/json" }
   });
 
-  try {
-
-    const chatSession = model.startChat();
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-const result = await model.generateContent([systeminstruction, message]);
-const reply = result.response.text();
-    console.log("hey",reply)
-
-    return NextResponse.json({ reply });
-
+    const result = await model.generateContent(text);
+    const flashcardContent = result.response.candidates[0].content.parts[0].text;
+    try {
+      const parsedFlashcards = JSON.parse(flashcardContent);
+      return NextResponse.json(parsedFlashcards); 
   } catch (error) {
-
-    console.log("Error with Gemeni API", error);
-    return NextResponse.json(
-      { error: "Failed to generate text from Gemini" },
-      { status: 500 }
-    );
-
+      console.error("Error parsing flashcard content:", error);
+      return NextResponse.json({ error: 'Failed to process flashcards' }, { status: 500 });
   }
-
+ 
 }
