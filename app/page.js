@@ -25,7 +25,7 @@ export default function Home() {
       method: "POST",
       headers: { origin: "http://localhost:3000" },
     });
-    console.log(checkoutSession)
+    console.log(checkoutSession);
     const checkoutSessionJson = await checkoutSession.json();
 
     const stripe = await getStripe();
@@ -39,6 +39,13 @@ export default function Home() {
   };
 
   const { signOut } = useClerk();
+
+  //Testing out the onclick function in the object
+  let pricinginfo = [
+    { title: "Free", buttonText: "Try Here" },
+    { title: "Pro", buttonText: "Buy Now", onClick: handleSubmit },
+  ];
+
   return (
     <Box width="100vw" height="100vh" sx={{ backgroundColor: "#4c516d" }}>
       <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-up"} />
@@ -123,6 +130,14 @@ export default function Home() {
           >
             Sign Out
           </Button>
+          {pricinginfo.map((price, index) => (
+            <Cards
+              key={index}
+              title={price.title}
+              buttonText={price.buttonText}
+              onClick={price.onClick}
+            />
+          ))}
         </Stack>
       </Stack>
     </Box>
