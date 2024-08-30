@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, AppBar, Typography, Stack, Toolbar, Button } from "@mui/material";
 import Link from "next/link";
-import SignUp from "@/app/Sign-up/[[...sign-up]]/page";
-import Login from "@/app/Log-in/[[...sign-in]]/page";
+import SignUp from "../app/Sign-up/[[...sign-up]]/page";
+import Login from "../app/Log-in/[[...sign-in]]/page";
 
 export default function ToolBar({ loginLink, signUpLink }) {
   return (
