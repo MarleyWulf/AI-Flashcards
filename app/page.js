@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { Box, Typography, Stack, Button } from "@mui/material";
 import Cards from "../components/cards";
-import ToolBar from "@/components/ToolBar";
+import ToolBar from "../components/ToolBar";
 import { useClerk } from "@clerk/nextjs";
-import getStripe from "@/utils/get-stripe";
+import getStripe from "../utils/get-stripe";
 
 let cardsinfo = [
   {
@@ -25,7 +25,7 @@ export default function Home() {
       method: "POST",
       headers: { origin: "http://localhost:3000" },
     });
-    console.log(checkoutSession)
+    console.log("the checkout",checkoutSession)
     const checkoutSessionJson = await checkoutSession.json();
 
     const stripe = await getStripe();
