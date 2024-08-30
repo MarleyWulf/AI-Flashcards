@@ -39,6 +39,13 @@ export default function Home() {
   };
 
   const { signOut } = useClerk();
+
+  //Testing out the onclick function in the object
+  let pricinginfo = [
+    { title: "Free", buttonText: "Try Here" },
+    { title: "Pro", buttonText: "Buy Now", onClick: handleSubmit },
+  ];
+
   return (
     <Box width="100vw" height="100vh" sx={{ backgroundColor: "#4c516d" }}>
       <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-up"} />

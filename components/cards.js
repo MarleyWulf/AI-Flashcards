@@ -15,7 +15,7 @@ const bull = (
   </Box>
 );
 
-function Cards({ title, mainText, description, quote, buttonText }) {
+function Cards({ title, mainText, description, quote, buttonText, onClick }) {
   return (
     <Box sx={{ minWidth: 275 }}>
       <Card variant="outlined">
@@ -32,7 +32,9 @@ function Cards({ title, mainText, description, quote, buttonText }) {
           <Typography variant="body2">{quote}</Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">{buttonText}</Button>
+          <Button size="small" onClick={onClick}>
+            {buttonText}
+          </Button>
         </CardActions>
       </Card>
     </Box>
