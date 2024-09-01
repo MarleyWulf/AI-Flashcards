@@ -1,7 +1,8 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { Box, Typography, Container } from "@mui/material";
 import { SignUp as ClerkSignUp } from "@clerk/nextjs";
-import ToolBar from "../../../components/ToolBar";
+// import ToolBar from "@/components/ToolBar";
+import ToolBar from "../../components/ToolBar";
 
 export default function SignUp() {
   return (

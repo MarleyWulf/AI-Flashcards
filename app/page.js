@@ -2,10 +2,11 @@
 // import Image from "next/image";
 import Link from "next/link";
 import { Box, Typography, Stack, Button } from "@mui/material";
-import Cards from "../components/cards";
-import ToolBar from "../components/ToolBar";
+import Cards from "./components/cards";
+import ToolBar from "../app/components/ToolBar";
+// import ToolBar from "./components/ToolBar";
 import { useClerk } from "@clerk/nextjs";
-import getStripe from "../utils/get-stripe";
+import getStripe from "@/utils/get-stripe";
 
 let cardsinfo = [
   {
@@ -25,7 +26,7 @@ export default function Home() {
       method: "POST",
       headers: { origin: "http://localhost:3000" },
     });
-    console.log("the checkout",checkoutSession)
+    console.log("the checkout", checkoutSession);
     const checkoutSessionJson = await checkoutSession.json();
 
     const stripe = await getStripe();
@@ -49,11 +50,46 @@ export default function Home() {
   return (
     <Box width="100vw" height="100vh" sx={{ backgroundColor: "#4c516d" }}>
       <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-up"} />
-      <Stack sx={{ alignItems: "center", mt: "20px" }}>
-        <Typography variant="h2">Welcome To FlashCards AI</Typography>
-        <Typography variant="h5">A better way to use flashcards</Typography>
+      <Stack
+        sx={{ alignItems: "center", mt: "20px", px: { xs: 2, sm: 4, md: 6 } }}
+      >
+        <Typography
+          variant="h2"
+          align="center"
+          sx={{
+            fontSize: {
+              xs: "h4.fontSize",
+              sm: "h3.fontSize",
+              md: "h2.fontSize",
+            },
+          }}
+        >
+          Welcome To FlashCards AI
+        </Typography>
+        <Typography
+          variant="h5"
+          align="center"
+          sx={{
+            fontSize: {
+              xs: "h6.fontSize",
+              sm: "h5.fontSize",
+              md: "h4.fontSize",
+            },
+          }}
+        >
+          A better way to use flashcards
+        </Typography>
 
-        <Button variant="outlined" sx={{ mt: "10px", textDecoration: "none" }}>
+        <Button
+          variant="outlined"
+          sx={{
+            mt: "10px",
+            textDecoration: "none",
+            px: 4,
+            py: 1,
+            fontSize: { xs: "12px", sm: "14px", md: "16px" },
+          }}
+        >
           <Link
             href="/Generate"
             style={{ textDecoration: "none", color: "inherit" }}
@@ -68,7 +104,19 @@ export default function Home() {
           ))}
         </Stack>
         <Stack sx={{ alignItems: "center", mt: "50px" }}>
-          <Typography variant="h4">Pricing</Typography>
+          <Typography
+            variant="h4"
+            align="center"
+            sx={{
+              fontSize: {
+                xs: "h5.fontSize",
+                sm: "h4.fontSize",
+                md: "h3.fontSize",
+              },
+            }}
+          >
+            Pricing
+          </Typography>
           <Stack
             direction="row"
             spacing={3}
@@ -78,7 +126,7 @@ export default function Home() {
               variant="contained"
               sx={{
                 width: "250px",
-                height: "150px",
+                height: "100px",
                 borderRadius: "12px",
                 boxShadow: 4,
                 textTransform: "none",
@@ -105,7 +153,7 @@ export default function Home() {
               variant="contained"
               sx={{
                 width: "250px",
-                height: "150px",
+                height: "100px",
                 borderRadius: "12px",
                 boxShadow: 4,
                 textTransform: "none",
@@ -124,12 +172,12 @@ export default function Home() {
               <Typography variant="h6">Pro</Typography>
             </Button>
           </Stack>
-          <Button
+          {/* <Button
             variant="outline"
             onClick={() => signOut({ redirectUrl: "/" })}
           >
             Sign Out
-          </Button>
+          </Button> */}
         </Stack>
       </Stack>
     </Box>
