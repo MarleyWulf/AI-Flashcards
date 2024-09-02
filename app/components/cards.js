@@ -17,10 +17,21 @@ const bull = (
 
 function Cards({ title, mainText, description, quote, buttonText, onClick }) {
   return (
-    <Box sx={{ minWidth: 275 }}>
-      <Card variant="outlined">
+    <Box
+      sx={{
+        minWidth: { xs: 200, sm: 250, md: 275 },
+        maxWidth: { xs: 300, sm: 400, md: 450 },
+        margin: "auto",
+        // padding: { xs: 2, sm: 3, md: 4 },
+      }}
+    >
+      <Card variant="outlined" sx={{ height: "100%" }}>
         <CardContent>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          <Typography
+            sx={{ fontSize: { xs: 12, sm: 14, md: 16 } }}
+            color="text.secondary"
+            gutterBottom
+          >
             {title}
           </Typography>
           <Typography variant="h6" component="div">
