@@ -4,9 +4,9 @@ import Link from "next/link";
 import { Box, Typography, Stack, Button } from "@mui/material";
 import Cards from "./components/cards";
 import ToolBar from "../app/components/ToolBar";
-// import ToolBar from "./components/ToolBar";
+
 import { useClerk } from "@clerk/nextjs";
-import getStripe from "@/utils/get-stripe";
+import getStripe from "../utils/get-stripe";
 
 let cardsinfo = [
   {
@@ -48,7 +48,16 @@ export default function Home() {
   ];
 
   return (
-    <Box width="100vw" height="100vh" sx={{ backgroundColor: "#4c516d" }}>
+    <Box
+      width="100vw"
+      height="100vh"
+      sx={{
+        backgroundColor: "#4c516d",
+        minHeight: "100vh", // Ensures the background covers the entire viewport
+        display: "flex", // Flexbox layout to handle content flow
+        flexDirection: "column", // Column layout to stack items vertically
+      }}
+    >
       <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-up"} />
       <Stack
         sx={{ alignItems: "center", mt: "20px", px: { xs: 2, sm: 4, md: 6 } }}
@@ -62,6 +71,7 @@ export default function Home() {
               sm: "h3.fontSize",
               md: "h2.fontSize",
             },
+            mb: 2,
           }}
         >
           Welcome To FlashCards AI
@@ -75,6 +85,7 @@ export default function Home() {
               sm: "h5.fontSize",
               md: "h4.fontSize",
             },
+            mb: 3,
           }}
         >
           A better way to use flashcards
@@ -98,12 +109,25 @@ export default function Home() {
           </Link>
         </Button>
 
-        <Stack direction="row" spacing={2} sx={{ mt: "40px" }}>
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{
+            mt: { xs: "20px", sm: "30px", md: "40px" },
+            flexWrap: "wrap", // Wrap items on small screens
+            justifyContent: "center",
+          }}
+        >
           {cardsinfo.map((card, index) => (
             <Cards key={index} title={card.title} mainText={card.mainText} />
           ))}
         </Stack>
-        <Stack sx={{ alignItems: "center", mt: "50px" }}>
+        <Stack
+          sx={{
+            alignItems: "center",
+            mt: { xs: "30px", sm: "40px", md: "50px" },
+          }}
+        >
           <Typography
             variant="h4"
             align="center"
@@ -120,13 +144,17 @@ export default function Home() {
           <Stack
             direction="row"
             spacing={3}
-            sx={{ alignItems: "center", mt: "20px" }}
+            sx={{
+              alignItems: "center",
+              mt: { xs: "10px", sm: "15px", md: "15px" },
+              justifyContent: "center",
+            }}
           >
             <Button
               variant="contained"
               sx={{
-                width: "250px",
-                height: "100px",
+                width: { xs: "150px", sm: "200px", md: "250px" },
+                height: { xs: "80px", sm: "90px", md: "100px" },
                 borderRadius: "12px",
                 boxShadow: 4,
                 textTransform: "none",
@@ -152,8 +180,8 @@ export default function Home() {
               onClick={handleSubmit}
               variant="contained"
               sx={{
-                width: "250px",
-                height: "100px",
+                width: { xs: "150px", sm: "200px", md: "250px" },
+                height: { xs: "80px", sm: "90px", md: "100px" },
                 borderRadius: "12px",
                 boxShadow: 4,
                 textTransform: "none",
@@ -172,12 +200,6 @@ export default function Home() {
               <Typography variant="h6">Pro</Typography>
             </Button>
           </Stack>
-          {/* <Button
-            variant="outline"
-            onClick={() => signOut({ redirectUrl: "/" })}
-          >
-            Sign Out
-          </Button> */}
         </Stack>
       </Stack>
     </Box>

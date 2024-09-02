@@ -18,11 +18,18 @@ import {
 } from "@mui/material";
 
 import { useState, useEffect } from "react";
-import ToolBar from "@/components/ToolBar.js";
+import ToolBar from "../components/ToolBar";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import {db} from '@/firebase'
-import {doc,collection, setDoc, getDoc, writeBatch } from 'firebase/firestore'
+// import { db } from "@/firebase";
+import { db } from "../firebase";
+import {
+  doc,
+  collection,
+  setDoc,
+  getDoc,
+  writeBatch,
+} from "firebase/firestore";
 
 export default function GenerateFlashcards() {
   const [text, setText] = useState("");
@@ -31,7 +38,7 @@ export default function GenerateFlashcards() {
   const [name, setName] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const { isLoaded, isSignedIn, user } = useUser();
-  const router = useRouter()
+  const router = useRouter();
   const handleInputChange = (e) => {
     setText(e.target.value);
   };
@@ -87,7 +94,7 @@ export default function GenerateFlashcards() {
     }
 
     const colRef = collection(userDocRef, name);
-    
+
     flashcards.forEach((flashcard) => {
       const cardDocRef = doc(colRef);
       batch.set(cardDocRef, flashcard);
@@ -103,7 +110,7 @@ export default function GenerateFlashcards() {
       const isFrontInitialized = flashcards.some((flashcard) =>
         flashcard.hasOwnProperty("isFront")
       );
-  
+
       if (!isFrontInitialized) {
         setFlashcards((prevFlashcards) =>
           prevFlashcards.map((flashcard) => ({
