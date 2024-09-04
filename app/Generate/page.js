@@ -22,7 +22,7 @@ import ToolBar from "../components/ToolBar";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 // import { db } from "@/firebase";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import {
   doc,
   collection,
