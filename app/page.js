@@ -51,7 +51,7 @@ export default function Home() {
       width="100vw"
       height="100vh"
       sx={{
-        backgroundColor: "#4c516d",
+        backgroundColor: "#202735",
         minHeight: "100vh", // Ensures the background covers the entire viewport
         display: "flex", // Flexbox layout to handle content flow
         flexDirection: "column", // Column layout to stack items vertically
@@ -65,12 +65,14 @@ export default function Home() {
           variant="h2"
           align="center"
           sx={{
+            color: "#FFFFFF",
             fontSize: {
               xs: "h4.fontSize",
               sm: "h3.fontSize",
               md: "h2.fontSize",
             },
             mb: 2,
+            fontWeight: "bold",
           }}
         >
           Welcome To FlashCards AI
@@ -118,7 +120,25 @@ export default function Home() {
           }}
         >
           {cardsinfo.map((card, index) => (
-            <Cards key={index} title={card.title} mainText={card.mainText} />
+            <Box
+              key={index}
+              sx={{
+                backgroundColor: "#3C3F51",
+                padding: 3,
+                borderRadius: "12px",
+                boxShadow: 4,
+                minWidth: "250px",
+                maxWidth: "300px",
+                m: 2,
+              }}
+            >
+              <Typography variant="h6" color="#FFFFFF">
+                {card.title}
+              </Typography>
+              <Typography variant="body1" color="#B0B3B8" mt={1}>
+                {card.mainText}
+              </Typography>
+            </Box>
           ))}
         </Stack>
         <Stack
@@ -131,6 +151,7 @@ export default function Home() {
             variant="h4"
             align="center"
             sx={{
+              color: "#FFFFFF",
               fontSize: {
                 xs: "h5.fontSize",
                 sm: "h4.fontSize",
@@ -157,7 +178,7 @@ export default function Home() {
                 borderRadius: "12px",
                 boxShadow: 4,
                 textTransform: "none",
-                backgroundColor: "#1E90FF",
+                backgroundColor: "#f37735",
                 color: "#fff",
                 display: "flex",
                 flexDirection: "column",
