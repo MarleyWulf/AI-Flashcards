@@ -15,7 +15,10 @@ export default function ToolBar({ loginLink, signUpLink }) {
         <AppBar position="static" sx={{ backgroundColor: "black" }}>
           <Toolbar sx={{ justifyContent: "space-between" }}>
             <Typography>
-              <Link href="/" style={{ textDecoration: "none" }}>
+              <Link
+                href="/"
+                style={{ textDecoration: "none", color: "#f37735" }}
+              >
                 Flashcards AI
               </Link>
             </Typography>
@@ -25,7 +28,7 @@ export default function ToolBar({ loginLink, signUpLink }) {
                   <Button>
                     <Link
                       href="/Generate"
-                      style={{ textDecoration: "none", color: "inherit" }}
+                      style={{ textDecoration: "none", color: "#f37735" }}
                     >
                       Generate
                     </Link>
@@ -33,7 +36,7 @@ export default function ToolBar({ loginLink, signUpLink }) {
                   <Button>
                     <Link
                       href="/flashcards"
-                      style={{ textDecoration: "none", color: "inherit" }}
+                      style={{ textDecoration: "none", color: "#f37735" }}
                     >
                       Flashcards
                     </Link>
