@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from '../../firebase';
+import { db } from "../../firebase";
 import { useRouter } from "next/navigation";
-
+import ToolBar from "../components/ToolBar";
 import { useUser } from "@clerk/nextjs";
 import {
   Container,
@@ -13,10 +13,11 @@ import {
   CardContent,
   Card,
   CardActionArea,
+  Box,
 } from "@mui/material";
 
 export default function Flashcard() {
-    const { isLoaded, isSignedIn, user } = useUser();
+  const { isLoaded, isSignedIn, user } = useUser();
   const [flashcards, setFlashcards] = useState([]);
   const router = useRouter();
 
@@ -43,24 +44,27 @@ export default function Flashcard() {
   };
 
   return (
-    <Container maxWidth="100vw">
-      <Grid container spacing={3} sx={{ mt: 4 }}>
-        {flashcards.map((flashcard, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card>
-              <CardActionArea
-                onClick={() => {
-                  handleCardClick(flashcard.name);
-                }}
-              >
-                <CardContent>
-                  <Typography variant="h6">{flashcard.name}</Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+    <Box sx={{ width: "100vw", m: 0, p: 0 }}>
+      <ToolBar />
+      <Container maxWidth="100vw">
+        <Grid container spacing={3} sx={{ mt: 4 }}>
+          {flashcards.map((flashcard, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Card>
+                <CardActionArea
+                  onClick={() => {
+                    handleCardClick(flashcard.name);
+                  }}
+                >
+                  <CardContent>
+                    <Typography variant="h6">{flashcard.name}</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </Box>
   );
 }

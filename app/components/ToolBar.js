@@ -21,11 +21,29 @@ export default function ToolBar({ loginLink, signUpLink }) {
             </Typography>
             <Box sx={{ ml: "auto" }}>
               {user ? (
-                <SignOutButton>
-                  <Button sx={{ color: "inherit", textDecoration: "none" }}>
-                    Sign Out
+                <>
+                  <Button>
+                    <Link
+                      href="/Generate"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      Generate
+                    </Link>
                   </Button>
-                </SignOutButton>
+                  <Button>
+                    <Link
+                      href="/flashcards"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      Flashcards
+                    </Link>
+                  </Button>
+                  <SignOutButton>
+                    <Button sx={{ color: "inherit", textDecoration: "none" }}>
+                      Sign Out
+                    </Button>
+                  </SignOutButton>
+                </>
               ) : (
                 <>
                   <Button>
@@ -46,22 +64,6 @@ export default function ToolBar({ loginLink, signUpLink }) {
                   </Button>
                 </>
               )}
-              {/* <Button>
-                <Link
-                  href={loginLink}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  Login
-                </Link>
-              </Button>
-              <Button>
-                <Link
-                  href={signUpLink}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  Sign Up
-                </Link>
-              </Button> */}
             </Box>
           </Toolbar>
         </AppBar>
