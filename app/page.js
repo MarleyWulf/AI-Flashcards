@@ -81,6 +81,7 @@ export default function Home() {
           variant="h5"
           align="center"
           sx={{
+            color: "#B0B3B8",
             fontSize: {
               xs: "h6.fontSize",
               sm: "h5.fontSize",
@@ -95,6 +96,8 @@ export default function Home() {
         <Button
           variant="outlined"
           sx={{
+            color: "#f37735",
+            borderColor: "#f37735", // Border color
             mt: "10px",
             textDecoration: "none",
             px: 4,

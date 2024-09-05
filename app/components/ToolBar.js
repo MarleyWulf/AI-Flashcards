@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { useState } from "react";
 import { Box, AppBar, Typography, Stack, Toolbar, Button } from "@mui/material";
 import Link from "next/link";
 import { useUser, SignOutButton } from "@clerk/nextjs"; // Assuming you're using Clerk for authentication
@@ -8,6 +8,7 @@ import { useUser, SignOutButton } from "@clerk/nextjs"; // Assuming you're using
 
 export default function ToolBar({ loginLink, signUpLink }) {
   const { user } = useUser();
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <Stack>
@@ -17,7 +18,12 @@ export default function ToolBar({ loginLink, signUpLink }) {
             <Typography>
               <Link
                 href="/"
-                style={{ textDecoration: "none", color: "#f37735" }}
+                style={{
+                  textDecoration: "none",
+                  color: isHovered ? "#ffffff" : "#f37735",
+                }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
               >
                 Flashcards AI
               </Link>
