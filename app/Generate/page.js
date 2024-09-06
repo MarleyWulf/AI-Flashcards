@@ -122,7 +122,7 @@ export default function GenerateFlashcards() {
     }
   }, [flashcards]);
   return (
-    <Box>
+    <Box sx={{ backgroundColor: "#202735", minHeight: "100vh" }}>
       <ToolBar loginLink={"/Log-in"} signUpLink={"/Sign-up"} />
       <Container>
         <Box
@@ -134,7 +134,7 @@ export default function GenerateFlashcards() {
           }}
         >
           <Typography
-            sx={{ justifySelf: "center" }}
+            sx={{ justifySelf: "center", color: "#FFFFFF" }}
             variant="h3"
             component="h1"
             gutterBottom
@@ -149,7 +149,11 @@ export default function GenerateFlashcards() {
             multiline
             rows={4}
             variant="outlined"
-            sx={{ mb: 2 }}
+            sx={{
+              mb: 2,
+              backgroundColor: "#FFFFFF", // Set the background color to white
+              borderRadius: "4px", // Optional: adds a bit of rounded corners
+            }}
             onChange={handleInputChange}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
@@ -158,11 +162,13 @@ export default function GenerateFlashcards() {
               }
             }}
           />
+
           <Button
             cariant="contained"
             color="primary"
             onClick={handleSubmit}
             fullWidth
+            sx={{ color: "#f37735" }}
           >
             {" "}
             Render Flashcards
@@ -178,7 +184,7 @@ export default function GenerateFlashcards() {
           }}
         >
           {/** use grid, set each box with a value of 3, use space evenly? */}
-          <Typography sx={{ marginBottom: "20px" }}>
+          <Typography sx={{ marginBottom: "20px", color: "white" }}>
             {" "}
             Flashcards Preview
           </Typography>
@@ -190,7 +196,14 @@ export default function GenerateFlashcards() {
                 <>
                   {flashcards.map((flashcard, index) => (
                     <Grid item xs={3} key={index}>
-                      <Card sx={{ width: 250, height: 250, mb: 2 }}>
+                      <Card
+                        sx={{
+                          width: 250,
+                          height: 250,
+                          mb: 2,
+                          backgroundColor: "#f37735",
+                        }}
+                      >
                         <CardActionArea onClick={() => handleClick(index)}>
                           <CardContent>
                             <Box
