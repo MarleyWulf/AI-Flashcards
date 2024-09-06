@@ -44,20 +44,30 @@ export default function Flashcard() {
   };
 
   return (
-    <Box sx={{ width: "100vw", m: 0, p: 0 }}>
+    <Box
+      sx={{
+        width: "100vw",
+        m: 0,
+        p: 0,
+        minHeight: "100vh",
+        backgroundColor: "#202735", // Set the background color here
+      }}
+    >
       <ToolBar />
       <Container maxWidth="100vw">
         <Grid container spacing={3} sx={{ mt: 4 }}>
           {flashcards.map((flashcard, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card>
+              <Card sx={{ backgroundColor: "#f37735" }}>
                 <CardActionArea
                   onClick={() => {
                     handleCardClick(flashcard.name);
                   }}
                 >
                   <CardContent>
-                    <Typography variant="h6">{flashcard.name}</Typography>
+                    <Typography variant="h6" sx={{ color: "white" }}>
+                      {flashcard.name}
+                    </Typography>
                   </CardContent>
                 </CardActionArea>
               </Card>

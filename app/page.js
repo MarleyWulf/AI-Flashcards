@@ -52,6 +52,7 @@ export default function Home() {
       height="100vh"
       sx={{
         backgroundColor: "#202735",
+
         minHeight: "100vh", // Ensures the background covers the entire viewport
         display: "flex", // Flexbox layout to handle content flow
         flexDirection: "column", // Column layout to stack items vertically
