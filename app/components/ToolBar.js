@@ -58,7 +58,7 @@ export default function ToolBar({ loginLink, signUpLink }) {
                   <Button>
                     <Link
                       href={loginLink}
-                      style={{ textDecoration: "none", color: "inherit" }}
+                      style={{ textDecoration: "none", color: "#f37735" }}
                     >
                       Login
                     </Link>
@@ -66,7 +66,7 @@ export default function ToolBar({ loginLink, signUpLink }) {
                   <Button>
                     <Link
                       href={signUpLink}
-                      style={{ textDecoration: "none", color: "inherit" }}
+                      style={{ textDecoration: "none", color: "#f37735" }}
                     >
                       Sign Up
                     </Link>
