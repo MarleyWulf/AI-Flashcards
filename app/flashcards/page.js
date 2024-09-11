@@ -65,7 +65,7 @@ export default function Flashcard() {
                   }}
                 >
                   <CardContent>
-                    <Typography variant="h6" sx={{ color: "white" }}>
+                    <Typography variant="h6" sx={{ color: "black" }}>
                       {flashcard.name}
                     </Typography>
                   </CardContent>

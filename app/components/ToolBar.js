@@ -66,7 +66,7 @@ export default function ToolBar({ loginLink, signUpLink }) {
                   <Button>
                     <Link
                       href={signUpLink}
-                      style={{ textDecoration: "none", color: "#f37735K" }}
+                      style={{ textDecoration: "none", color: "#f37735" }}
                     >
                       Sign Up
                     </Link>
