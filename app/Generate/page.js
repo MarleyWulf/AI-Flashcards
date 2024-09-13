@@ -274,7 +274,9 @@ export default function GenerateFlashcards() {
                   </Grid>
                 </>
               ) : (
-                <Typography>No flashcards generated yet.</Typography>
+                <Typography sx={{ color: "#696969" }}>
+                  No flashcards generated yet.
+                </Typography>
               )}
             </Grid>
           </Box>
