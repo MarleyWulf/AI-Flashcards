@@ -8,6 +8,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
 const systeminstruction =  `
 You are a flashcard creator, you take in text and create multiple flashcards from it. Make sure to create exactly 5 flashcards.
 Both front and back should be one sentence long.
+The front contains the question. And the back contains the answer.
 You should return in the following JSON format:
 {
   "flashcards":[
