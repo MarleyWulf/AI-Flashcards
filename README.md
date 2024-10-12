@@ -1,36 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# [AI Flashcard App](https://ai-flashcards-ivory.vercel.app/)
+![Screenshot (283)](https://github.com/user-attachments/assets/877f3ced-99ae-49fb-b825-ed61476b6937)
 
-## Getting Started
+## Overview
 
-First, run the development server:
+The AI Flashcard App is a dynamic web application designed to enhance learning efficiency by generating flashcards based on user-provided topics. Utilizing Google's Gemini API, the app creates customized flashcards, allowing users to optimize their learning experience.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Project Details
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Backend:** The app uses Google's Gemini API to generate flashcards based on topics provided by users, enhancing learning through personalized content.
+- **Frontend:** Built with Next.js and styled using Material-UI for a sleek, responsive interface.
+- **Deployment:** Launched on Vercel for scalable and efficient performance.
+- **Authentication & Database:** Integrated Firebase for secure user authentication and real-time management of flashcards.
+- **Payments:** Implemented Stripe for handling user subscription payments.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Collaboration
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project was developed with collaboration from [MarleyWulf](https://github.com/MarleyWulf).
 
-## Learn More
+## Live Demo
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+You can access the live demo of the AI Flashcard App [here](https://ai-flashcards-ivory.vercel.app/).
