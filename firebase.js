@@ -4,7 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBX3aaTLjq236hVo88d7aXsmUbjvegnwcM",
+  apiKey: ,
   authDomain: "aiflashcards-9361c.firebaseapp.com",
   projectId: "aiflashcards-9361c",
   storageBucket: "aiflashcards-9361c.appspot.com",
